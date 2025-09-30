@@ -23,7 +23,7 @@ const AllServices = ({services}) => {
         <div className="flex items-center justify-center min-h-[200px] w-full px-4 sm:px-8">
           <div className="text-center">
             <h2 className="text-2xl sm:text-3xl font-semibold text-gray-600 mb-4">
-              No Services Found
+              No Shops Found
             </h2>
           </div>
         </div>
