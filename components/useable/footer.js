@@ -100,7 +100,7 @@ const Footer = () => {
        
         {/* <div className="w-full border-t border-white/10 pt-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
+            <div>gg
               <h4 className="text-white font-semibold mb-3">Contact Info</h4>
               <div className="text-white/60 text-sm space-y-2">
                 <p>📧 info@qatarnightmarkets.com</p>
