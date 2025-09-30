@@ -20,8 +20,8 @@ export default function HomePage({shots}) {
       <div className="mt-24">
         <ShotsSection shots={shots}/>
       </div>
-      <Testimonial />
-      <FAQ />
+      {/* <Testimonial />
+      <FAQ /> */}
       {/* <LastSection /> */}
     </>
   );
