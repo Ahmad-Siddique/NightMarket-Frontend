@@ -67,7 +67,7 @@ const Footer = () => {
             {[
               { label: "Night Markets", href: "/nightmarket" },
               { label: "Shops", href: "/shop" },
-              { label: "Food Menu", href: "/menuitem" }
+              { label: "Food Menu", href: "/menuitems" }
               
             ].map((item) => (
               <a 
