@@ -1,5 +1,7 @@
-import HomePage from "../../components/home/HomePage";
+// Add this export at the top of your file
+export const dynamic = 'force-dynamic';
 
+import HomePage from "../../components/home/HomePage";
 
 export default async function Page() {
   const baseUrl =
@@ -22,11 +24,3 @@ export default async function Page() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
