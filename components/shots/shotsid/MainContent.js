@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 // Dynamically import MapContainer to avoid SSR issues in Next.js
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
@@ -8,7 +9,7 @@ const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLaye
 const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
 const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 
-// SVG Icons
+// SVG Icons (keeping all existing icons as they are)
 const LikeIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
     <path d="M16.5 3.5c-1.74 0-3.41 1.01-4.5 2.09C10.91 4.51 9.24 3.5 7.5 3.5A5.505 5.505 0 0 0 2 9c0 7.08 10 11.5 10 11.5s10-4.42 10-11.5a5.505 5.505 0 0 0-5.5-5.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
@@ -72,6 +73,31 @@ const getCoordinates = (location) => {
 // Shop Card Component
 const ShopCard = ({ shop, bazaarName }) => {
   const coords = getCoordinates(shop.location);
+  const router = useRouter();
+
+  const handleMenuClick = () => {
+    if (shop.slug) {
+      router.push(`/shop/view/${shop.slug}`);
+    } else {
+      console.log('No slug available for shop:', shop.name);
+      // Fallback: you could use shop._id or shop.name as a slug
+      if (shop._id) {
+        router.push(`/shop/view/${shop._id}`);
+      }
+    }
+  };
+
+  const handleViewMenu = () => {
+    if (shop.slug) {
+      router.push(`/shop/view/${shop.slug}`);
+    } else {
+      console.log('No slug available for shop:', shop.name);
+      // Fallback navigation
+      if (shop._id) {
+        router.push(`/shop/view/${shop._id}`);
+      }
+    }
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -107,11 +133,7 @@ const ShopCard = ({ shop, bazaarName }) => {
         {/* Menu Button - Top Right */}
         <div className="absolute top-3 right-3">
           <button
-            onClick={() => {
-              // Handle menu view - you can navigate to menu page or open modal
-              console.log('View menu for:', shop.name);
-              // Example: router.push(`/menu/${shop.slug}`)
-            }}
+            onClick={handleMenuClick}
             className="bg-orange-600 hover:bg-orange-700 text-white px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors shadow-lg"
           >
             <MenuIcon />
@@ -165,10 +187,7 @@ const ShopCard = ({ shop, bazaarName }) => {
         {/* Action Buttons */}
         <div className="flex gap-2 pt-3 border-t border-gray-100">
           <button
-            onClick={() => {
-              console.log('View menu for:', shop.name);
-              // Handle menu navigation
-            }}
+            onClick={handleViewMenu}
             className="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-2.5 px-4 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
           >
             <MenuIcon />
@@ -250,7 +269,7 @@ const ShopCard = ({ shop, bazaarName }) => {
   );
 };
 
-// (Keep all the existing map components - GoogleMapEmbed, OpenStreetMapComponent, etc.)
+// Keep all your existing map components unchanged
 const GoogleMapEmbed = ({ location }) => {
   const coords = getCoordinates(location);
   
@@ -355,7 +374,7 @@ const MainContent = ({ shot }) => {
   console.log("=== SHOT DATA STRUCTURE ===");
   console.log("shot:", JSON.stringify(shot, null, 2));
   
-  const [mapType, setMapType] = useState('openstreet'); // Default to OpenStreetMap
+  const [mapType, setMapType] = useState('openstreet');
   const [likes, setLikes] = useState(0);
   const [liking, setLiking] = useState(false);
 
@@ -453,7 +472,6 @@ const MainContent = ({ shot }) => {
                 </div>
               )}
 
-              {/* Shop count */}
               {s.shops && s.shops.length > 0 && (
                 <div className="text-blue-600 text-sm font-medium">
                   {s.shops.length} shop{s.shops.length !== 1 ? 's' : ''} available
